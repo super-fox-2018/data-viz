@@ -1,0 +1,8 @@
+g.x g.tick text {
+  transform: rotate(-290deg);
+  text-align: left;
+}
+
+svg {
+  border: 1px solid black;
+}
