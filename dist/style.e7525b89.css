@@ -1,0 +1,10 @@
+.bar{
+    /* display: inline-block; */
+    /* width: 20px; */
+    /* margin-right: 10px;
+    background-color: blue; */
+}
+
+rect :hover{
+    background-color: darksalmon;
+}
