@@ -8,12 +8,14 @@ d3.csv('fifa_ranking.csv')
 			dataset.push(data_fifa_ranking.previous_points)
 		});
 
-		const svg = d3.select('#chartBar')
+		const svg = d3
+			.select('#chartBar')
 			.selectAll('div')
 			.data(fifa_ranking_data)
 			.enter()
 			.append('div')
-			.transition().duration(1000)
+			.transition()
+			.duration(1000)
 			.attr('class', 'bar')
 			.text(function (fifa_ranking_data, i) {
 				let NewRangk = i + 1
@@ -36,7 +38,8 @@ d3.csv('world_cups.csv')
 		dataWC.sort((a, b) => {
 			return a.GoalsScored - b.GoalsScored
 		})
-		const svg1 = d3.select('#chartBar1')
+		const svg = d3
+			.select('#chartBar1')
 			.append('svg')
 			.attr('width', 800)
 			.attr('height', 500)
@@ -69,11 +72,12 @@ d3.csv('world_cups.csv')
 		let min = +dataWC[0].GoalsScored
 		let max = +(dataWC[dataWC.length - 1].GoalsScored)
 
-		const colorScale = d3.scaleLinear()
+		const colorScale = d3
+			.scaleLinear()
 			.domain([min, max])
 			.range(['red', 'green'])
 
-		svg1
+		svg
 			.selectAll('rect')
 			.data(dataWC)
 			.enter()
@@ -105,7 +109,7 @@ d3.csv('world_cups.csv')
 				return GoalsScored * 50
 			})
 
-		svg1
+		svg
 			.selectAll('text')
 			.data(dataWC)
 			.enter()
@@ -125,7 +129,8 @@ d3.csv('world_cups.csv')
 				return GoalsScored
 			})
 
-		const svgLegend = d3.select('#chartBar2')
+		const svgLegend = d3
+			.select('#chartBar2')
 			.append('svg')
 			.attr('width', 250)
 			.attr('height', 620)
@@ -193,30 +198,38 @@ d3.csv('world_cups.csv')
 		const width = 800,
 			height = 800,
 			radius = Math.max(width, height) / 2
-		const color = d3.scaleOrdinal()
+		const color = d3
+			.scaleOrdinal()
 			.range(['green', 'red', 'blue', 'yellowgreen', 'magenta', 'pink', 'brown', 'silver', 'yellow', 'maroon'])
-		const pie = d3.pie()
+		const pie = d3
+			.pie()
 			.value(function (d) {
 				return d.GoalsScored
 			})(dataWC)
-		const arc = d3.arc()
+		const arc = d3
+			.arc()
 			.outerRadius(radius - 70)
 			.innerRadius(0)
-		const labelArc = d3.arc()
+		const labelArc = d3
+			.arc()
 			.outerRadius(radius - 100)
 			.innerRadius(radius - 40)
-		const svg1 = d3.select('#chartPie')
+		const svg = d3
+			.select('#chartPie')
 			.append('svg')
 			.attr('width', 1000)
 			.attr('height', height)
 			.append('g')
 			.attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
-		const g = svg1.selectAll('arc')
+		const g = svg
+			.selectAll('arc')
 			.data(pie)
-			.enter().append('g')
+			.enter()
+			.append('g')
 			.attr('class', 'arc')
 		g.append('path')
-			.transition().duration(1000)
+			.transition()
+			.duration(1000)
 			.attr('d', arc)
 			.style('fill', function (d) {
 				return color(d.data.GoalsScored)
