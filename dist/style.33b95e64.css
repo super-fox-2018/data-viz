@@ -1,0 +1,14 @@
+.bar {
+  /* width: 50px; */
+  /* background-color: aquamarine;
+  margin-left: 50px;
+  display: inline-block; */
+  opacity: 0.5;
+}
+
+#chartarea{
+  text-align: center;
+  background-image: url("http://www.jsweet.org/wp-content/uploads/2016/04/react-logo-300x289.png");
+  background-repeat:no-repeat;
+  background-position: center center;
+}
