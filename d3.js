@@ -8,16 +8,16 @@ d3.csv('fifa_ranking.csv')
 			dataset.push(data_fifa_ranking.previous_points)
 		});
 
-		d3.select('#chartBar')
+		const svg = d3.select('#chartBar')
 			.selectAll('div')
 			.data(fifa_ranking_data)
 			.enter()
 			.append('div')
-			.transition().duration(800)
+			.transition().duration(1000)
 			.attr('class', 'bar')
 			.text(function (fifa_ranking_data, i) {
 				let NewRangk = i + 1
-				return `New Rangking= ${NewRangk} Old Rangking= ${fifa_ranking_data.rank} ${fifa_ranking_data.country_full} [${fifa_ranking_data.country_abrv}] ${fifa_ranking_data.previous_points} points`
+				return `New Rangk= ${NewRangk}; Old Rangk= ${fifa_ranking_data.rank}; ${fifa_ranking_data.country_full} [${fifa_ranking_data.country_abrv}] ${fifa_ranking_data.previous_points} points`
 			})
 			.style('width', function (fifa_ranking_data) {
 				return fifa_ranking_data.previous_points * 10 + 'px'
@@ -29,36 +29,34 @@ d3.csv('fifa_ranking.csv')
 	.catch(err => {
 		throw err
 	})
-//-----------------------------------------------------------------------------------------------
-
-
-const svg = d3.select('#chartBar1')
-	.append('svg')
-	.attr('width', 800)
-	.attr('height', 500)
-	.style('background', '#cacaca')
-
-const margin = {
-	top: 50,
-	right: 50,
-	bottom: 20,
-	left: 20
-}
-const width = 870 - margin.left - margin.right
-const height = 550 - margin.top - margin.bottom
-
-
-const x = d3.scaleBand()
-	.range([0, width])
-
-const y = d3.scaleBand()
-	.range([height, 0])
+//-----------------------------------------------------------------------------------------------∫
 
 d3.csv('world_cups.csv')
 	.then(dataWC => {
 		dataWC.sort((a, b) => {
 			return a.GoalsScored - b.GoalsScored
 		})
+		const svg1 = d3.select('#chartBar1')
+			.append('svg')
+			.attr('width', 800)
+			.attr('height', 500)
+			.style('background', '#b0e0e6')
+
+		const margin = {
+			top: 50,
+			right: 50,
+			bottom: 20,
+			left: 20
+		}
+		const width = 870 - margin.left - margin.right
+		const height = 550 - margin.top - margin.bottom
+
+
+		const x = d3.scaleBand()
+			.range([0, width])
+
+		const y = d3.scaleBand()
+			.range([height, 0])
 
 		x.domain(dataWC.map(function (d) {
 			return d.Year
@@ -75,7 +73,7 @@ d3.csv('world_cups.csv')
 			.domain([min, max])
 			.range(['red', 'green'])
 
-		svg
+		svg1
 			.selectAll('rect')
 			.data(dataWC)
 			.enter()
@@ -93,11 +91,11 @@ d3.csv('world_cups.csv')
 			.attr('y', ({
 				GoalsScored
 			}) => {
-				return 320 - GoalsScored - 30
+				return (320 - GoalsScored) - 30
 			})
 			.attr('width', 30)
 			.transition()
-			.duration(750)
+			.duration(1000)
 			.delay(function (d, i) {
 				return i * 10;
 			})
@@ -107,7 +105,7 @@ d3.csv('world_cups.csv')
 				return GoalsScored * 50
 			})
 
-		svg
+		svg1
 			.selectAll('text')
 			.data(dataWC)
 			.enter()
@@ -127,20 +125,20 @@ d3.csv('world_cups.csv')
 				return GoalsScored
 			})
 
-		svg
-			.append('g')
-			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(x));
+		// svg1
+		// 	.append('g')
+		// 	.attr("transform", "translate(0," + height + ")")
+		// 	.call(d3.axisBottom(x) );
 
-		svg
-			.append('g')
-			.call(d3.axisLeft(y));
+		// svg1
+		// 	.append('g')
+		// 	.call(d3.axisLeft(y));
 
 		const svgLegend = d3.select('#chartBar2')
 			.append('svg')
-			.attr('width', 800)
+			.attr('width', 250)
 			.attr('height', 620)
-			.style('background', '#cacaca')
+			.style('background', '#b0e0e6')
 
 		svgLegend
 			.selectAll('rect')
@@ -157,7 +155,7 @@ d3.csv('world_cups.csv')
 				return 10
 			})
 			.attr('y', (d, i) => {
-				return i * 30
+				return i * 31
 			})
 			.attr('width', 15)
 			.attr('height', 15)
@@ -171,12 +169,13 @@ d3.csv('world_cups.csv')
 				return 30
 			})
 			.attr('y', (d, i) => {
-				return i * 33 - (i + 15)
+				return i * 32 - (i - 15)
 			})
 			.text(({
+				Year,
 				GoalsScored
 			}) => {
-				return GoalsScored
+				return [`Year: ${Year}, Total: ${GoalsScored} goal`]
 			})
 
 	})
@@ -185,3 +184,62 @@ d3.csv('world_cups.csv')
 	})
 
 //-----------------------------------------------------------------------------------------------
+d3.csv('world_cups.csv')
+	.then(dataWC => {
+		dataWC.sort((a, b) => {
+			return a.Year - b.Year
+		})
+		const data = [{
+			"letter": "q",
+			"presses": 1
+		}, {
+			"letter": "w",
+			"presses": 5
+		}, {
+			"letter": "e",
+			"presses": 2
+		}]
+		const width = 800,
+			height = 800,
+			radius = Math.max(width, height) / 2
+		const color = d3.scaleOrdinal()
+			.range(["green", "red", "blue", "grey", "magenta", "pink", "brown", "silver", "yellow", "maroon"])
+		const pie = d3.pie()
+			.value(function (d) {
+				return d.GoalsScored
+			})(dataWC)
+		const arc = d3.arc()
+			.outerRadius(radius - 70)
+			.innerRadius(0)
+		const labelArc = d3.arc()
+			.outerRadius(radius - 100)
+			.innerRadius(radius - 40)
+		const svg1 = d3.select("#chartPie")
+			.append("svg")
+			.attr("width", 1000)
+			.attr("height", height)
+			.append("g")
+			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+		const g = svg1.selectAll("arc")
+			.data(pie)
+			.enter().append("g")
+			.attr("class", "arc")
+		g.append("path")
+			.transition().duration(1000)
+			.attr("d", arc)
+			.style("fill", function (d) {
+				return color(d.data.GoalsScored)
+			})
+		g.append("text")
+			.transition().duration(1000)
+			.attr("transform", function (d) {
+				return "translate(" + labelArc.centroid(d) + ")"
+			})
+			.text(function (d) {
+				return `Year: ${d.data.Year}, Goal: ${d.data.GoalsScored}`
+			})
+			.style("fill", "black")
+	})
+	.catch(err => {
+		throw err
+	})
