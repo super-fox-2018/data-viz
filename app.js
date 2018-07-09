@@ -30,3 +30,23 @@ svg.selectAll('rect')
   .attr('height', function(d){
     return d * multiplier
   })
+
+const yScale = d3.scaleLinear()
+  .domain([0,25])
+  .range([0,300])
+
+svg.selectAll('rect')
+  .data(dataset)
+  .enter()
+  .append('rect')
+  .attr('class', 'bar')
+  .attr('x', function(d,i){
+    return i
+  })
+  .attr('y', function(d){
+    return 300 - yScale(d)
+  })
+  .attr('width',20)
+  .attr('height',function(d){
+    return yScale(d)
+  })

@@ -27496,6 +27496,16 @@ svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').
 }).attr('width', 20).attr('height', function (d) {
   return d * multiplier;
 });
+
+var yScale = d3.scaleLinear().domain([0, 25]).range([0, 300]);
+
+svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').attr('x', function (d, i) {
+  return i;
+}).attr('y', function (d) {
+  return 300 - yScale(d);
+}).attr('width', 20).attr('height', function (d) {
+  return yScale(d);
+});
 },{"d3":6}],512:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
