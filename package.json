@@ -1,0 +1,25 @@
+{
+  
+  "name": "data-viz",
+  "description": "",
+  "version": "1.0.0",
+  "main": "d3.js",
+  "dependencies": {
+    "d3": "^5.5.0"
+  },
+  "devDependencies": {},
+  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidjoshua87/data-viz.git"
+  },
+  "author": "afif",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidjoshua87/data-viz/issues"
+  },
+  "homepage": "https://github.com/davidjoshua87/data-viz#readme"
+}
