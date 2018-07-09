@@ -106,27 +106,60 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({3:[function(require,module,exports) {
 // import d3 from "d3";
 
-var dataset = [5, 10, 34, 20, 25];
+var datas = [];
+d3.csv('./cwurData.csv', function (item) {
+  var result = {
+    institution: item.institution,
+    score: item.score
+  };
+  datas.push(result);
+}).then(function () {
+  var data = datas.slice(0, 11);
+  var svg = d3.select('#chartArea').append('svg').attr('width', 2500).attr('height', 500).style('background', '#cacaca');
+
+  var margin = {
+    top: 20,
+    right: 0,
+    bottom: 30,
+    left: 40
+  };
+  var height = 500;
+  var width = 2000;
+  var y = d3.scaleLinear().domain([0, d3.max(data, function (d) {
+    return d.score;
+  })]).nice().range([height - margin.bottom, margin.top]);
+
+  var x = d3.scaleBand().domain(data.map(function (d) {
+    return d.institution;
+  })).range([margin.left, width - margin.right]).padding(0.5);
+
+  var xAxis = function xAxis(g) {
+    return g.attr("transform", 'translate(0,' + (height - margin.bottom) + ')').call(d3.axisBottom(x).tickSizeOuter(0));
+  };
+
+  var yAxis = function yAxis(g) {
+    return g.attr("transform", 'translate(' + margin.left + ',0)').call(d3.axisLeft(y)).call(function (g) {
+      return g.select(".domain").remove();
+    });
+  };
+
+  svg.append("g").attr("fill", "steelblue").selectAll("rect").data(data).enter().append("rect").attr("x", function (d) {
+    return x(d.institution);
+  }).attr("y", function (d) {
+    return y(d.score);
+  }).attr("height", function (d) {
+    return y(0) - y(d.score);
+  }).attr("width", x.bandwidth());
+
+  svg.append("g").call(xAxis);
+
+  svg.append("g").call(yAxis);
+});
+
+// let dataset = [5, 10, 34, 20, 25]
 
 // console.log(d3.select('body'));
 
-var svg = d3.select('#chartArea').append('svg').attr('width', 400).attr('height', 300).style('background', '#cacaca');
-
-var yScale = d3.scaleLinear().domain([0, d3.max(dataset)]).range([0, 300]);
-
-var colorScale = d3.scaleLinear().domain([0, d3.max(dataset)]).range(['peru', 'teal']);
-// .style('height', (d) => d*10 + 'px')
-svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').attr('x', function (d, index) {
-  return index * 22;
-}).attr('y', function (d) {
-  return 300 - yScale(d);
-}).attr('height', function (d) {
-  return yScale(d);
-}).attr('fill', colorScale).on('mouseover', function (d, i) {
-  d3.select(this).style('fill', '#bada55');
-}).on('mouseout', function (d, i) {
-  d3.select(this).style('fill', colorScale(d));
-});
 
 // d3.select('body').selectAll('div')
 },{}],7:[function(require,module,exports) {
@@ -158,7 +191,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '62492' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '51125' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
