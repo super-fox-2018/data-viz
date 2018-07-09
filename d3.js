@@ -29,8 +29,8 @@ d3.csv('fifa_ranking.csv')
 	.catch(err => {
 		throw err
 	})
-//-----------------------------------------------------------------------------------------------∫
 
+//-----------------------------------------------------------------------------------------------∫
 d3.csv('world_cups.csv')
 	.then(dataWC => {
 		dataWC.sort((a, b) => {
@@ -125,15 +125,6 @@ d3.csv('world_cups.csv')
 				return GoalsScored
 			})
 
-		// svg1
-		// 	.append('g')
-		// 	.attr("transform", "translate(0," + height + ")")
-		// 	.call(d3.axisBottom(x) );
-
-		// svg1
-		// 	.append('g')
-		// 	.call(d3.axisLeft(y));
-
 		const svgLegend = d3.select('#chartBar2')
 			.append('svg')
 			.attr('width', 250)
@@ -190,20 +181,20 @@ d3.csv('world_cups.csv')
 			return a.Year - b.Year
 		})
 		const data = [{
-			"letter": "q",
-			"presses": 1
+			'letter': 'q',
+			'presses': 1
 		}, {
-			"letter": "w",
-			"presses": 5
+			'letter': 'w',
+			'presses': 5
 		}, {
-			"letter": "e",
-			"presses": 2
+			'letter': 'e',
+			'presses': 2
 		}]
 		const width = 800,
 			height = 800,
 			radius = Math.max(width, height) / 2
 		const color = d3.scaleOrdinal()
-			.range(["green", "red", "blue", "grey", "magenta", "pink", "brown", "silver", "yellow", "maroon"])
+			.range(['green', 'red', 'blue', 'yellowgreen', 'magenta', 'pink', 'brown', 'silver', 'yellow', 'maroon'])
 		const pie = d3.pie()
 			.value(function (d) {
 				return d.GoalsScored
@@ -214,31 +205,31 @@ d3.csv('world_cups.csv')
 		const labelArc = d3.arc()
 			.outerRadius(radius - 100)
 			.innerRadius(radius - 40)
-		const svg1 = d3.select("#chartPie")
-			.append("svg")
-			.attr("width", 1000)
-			.attr("height", height)
-			.append("g")
-			.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-		const g = svg1.selectAll("arc")
+		const svg1 = d3.select('#chartPie')
+			.append('svg')
+			.attr('width', 1000)
+			.attr('height', height)
+			.append('g')
+			.attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+		const g = svg1.selectAll('arc')
 			.data(pie)
-			.enter().append("g")
-			.attr("class", "arc")
-		g.append("path")
+			.enter().append('g')
+			.attr('class', 'arc')
+		g.append('path')
 			.transition().duration(1000)
-			.attr("d", arc)
-			.style("fill", function (d) {
+			.attr('d', arc)
+			.style('fill', function (d) {
 				return color(d.data.GoalsScored)
 			})
-		g.append("text")
+		g.append('text')
 			.transition().duration(1000)
-			.attr("transform", function (d) {
-				return "translate(" + labelArc.centroid(d) + ")"
+			.attr('transform', function (d) {
+				return 'translate(' + labelArc.centroid(d) + ')'
 			})
 			.text(function (d) {
 				return `Year: ${d.data.Year}, Goal: ${d.data.GoalsScored}`
 			})
-			.style("fill", "black")
+			.style('fill', 'black')
 	})
 	.catch(err => {
 		throw err
