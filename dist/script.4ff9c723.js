@@ -103,26 +103,33 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({6:[function(require,module,exports) {
+})({3:[function(require,module,exports) {
 // import d3 from "d3";
 
-var dataset = [5, 10, 15, 20, 25];
+var dataset = [5, 10, 34, 20, 25];
 
 // console.log(d3.select('body'));
 
 var svg = d3.select('#chartArea').append('svg').attr('width', 400).attr('height', 300).style('background', '#cacaca');
 
+var yScale = d3.scaleLinear().domain([0, d3.max(dataset)]).range([0, 300]);
+
+var colorScale = d3.scaleLinear().domain([0, d3.max(dataset)]).range(['peru', 'teal']);
 // .style('height', (d) => d*10 + 'px')
 svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').attr('x', function (d, index) {
   return index * 22;
 }).attr('y', function (d) {
-  return 300 - d * 5;
+  return 300 - yScale(d);
 }).attr('height', function (d) {
-  return d * 5;
+  return yScale(d);
+}).attr('fill', colorScale).on('mouseover', function (d, i) {
+  d3.select(this).style('fill', '#bada55');
+}).on('mouseout', function (d, i) {
+  d3.select(this).style('fill', colorScale(d));
 });
 
 // d3.select('body').selectAll('div')
-},{}],21:[function(require,module,exports) {
+},{}],7:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -151,7 +158,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '53439' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '62492' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -292,5 +299,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[21,6], null)
+},{}]},{},[7,3], null)
 //# sourceMappingURL=/script.4ff9c723.map
