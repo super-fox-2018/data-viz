@@ -1,6 +1,5 @@
 d3.csv('fifa_ranking.csv')
 	.then(fifa_ranking => {
-		// console.log(fifa_ranking, 'datafifa')
 		let fifa_ranking_data = fifa_ranking.slice(0, 10).sort((a, b) => {
 			return b.previous_points - a.previous_points
 		})
@@ -26,19 +25,28 @@ d3.csv('fifa_ranking.csv')
 			.style('height', function (fifa_ranking_data) {
 				return fifa_ranking_data.previous_points * 0.5 + 'px'
 			})
-
-		//-----------------------------------------------------------------------------------------------
-
 	})
+	.catch(err => {
+		throw err
+	})
+//-----------------------------------------------------------------------------------------------
+
 
 const svg = d3.select('#chartBar1')
 	.append('svg')
-	.attr('width', 900)
+	.attr('width', 800)
 	.attr('height', 500)
 	.style('background', '#cacaca')
 
-const width = 600 - margin.left - margin.right
-const height = 600 - margin.top - margin.bottom
+const margin = {
+	top: 50,
+	right: 50,
+	bottom: 20,
+	left: 20
+}
+const width = 870 - margin.left - margin.right
+const height = 550 - margin.top - margin.bottom
+
 
 const x = d3.scaleBand()
 	.range([0, width])
@@ -67,14 +75,13 @@ d3.csv('world_cups.csv')
 			.domain([min, max])
 			.range(['red', 'green'])
 
-
-
 		svg
 			.selectAll('rect')
 			.data(dataWC)
 			.enter()
 			.append('rect')
-			.attr('class', 'bar')
+			.attr('class', 'bar1')
+			.attr('padding-left', 30)
 			.attr('fill', ({
 				GoalsScored
 			}) => {
@@ -86,7 +93,7 @@ d3.csv('world_cups.csv')
 			.attr('y', ({
 				GoalsScored
 			}) => {
-				return 320 - GoalsScored - 20
+				return 320 - GoalsScored - 30
 			})
 			.attr('width', 30)
 			.transition()
@@ -120,45 +127,61 @@ d3.csv('world_cups.csv')
 				return GoalsScored
 			})
 
+		svg
+			.append('g')
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x));
 
-		// 	svgLegend
-		// 		.selectAll('rect')
-		// 		.data(ramenData)
-		// 		.enter()
-		// 		.append('rect')
-		// 		.attr('class', 'legend')
-		// 		.attr('fill', ({
-		// 			GoalsScored
-		// 		}) => {
-		// 			return colorScale(GoalsScored)
-		// 		})
-		// 		.attr('x', (d, i) => {
-		// 			return 10
-		// 		})
-		// 		.attr('y', (d, i) => {
-		// 			return i * 30
-		// 		})
-		// 		.attr('width', 15)
-		// 		.attr('height', 15)
+		svg
+			.append('g')
+			.call(d3.axisLeft(y));
 
-		// 	svgLegend
-		// 		.selectAll('text')
-		// 		.data(ramenData)
-		// 		.enter()
-		// 		.append('text')
-		// 		.attr('x', (d, i) => {
-		// 			return 30
-		// 		})
-		// 		.attr('y', (d, i) => {
-		// 			return i * 32 - (i + 15)
-		// 		})
-		// 		.text(({
-		// 			Variety
-		// 		}) => {
-		// 			return Variety
-		// 		})
+		const svgLegend = d3.select('#chartBar2')
+			.append('svg')
+			.attr('width', 800)
+			.attr('height', 620)
+			.style('background', '#cacaca')
+
+		svgLegend
+			.selectAll('rect')
+			.data(dataWC)
+			.enter()
+			.append('rect')
+			.attr('class', 'legend')
+			.attr('fill', ({
+				GoalsScored
+			}) => {
+				return colorScale(GoalsScored)
+			})
+			.attr('x', (d, i) => {
+				return 10
+			})
+			.attr('y', (d, i) => {
+				return i * 30
+			})
+			.attr('width', 15)
+			.attr('height', 15)
+
+		svgLegend
+			.selectAll('text')
+			.data(dataWC)
+			.enter()
+			.append('text')
+			.attr('x', (d, i) => {
+				return 30
+			})
+			.attr('y', (d, i) => {
+				return i * 33 - (i + 15)
+			})
+			.text(({
+				GoalsScored
+			}) => {
+				return GoalsScored
+			})
 
 	})
 	.catch(err => {
 		throw err
 	})
+
+//-----------------------------------------------------------------------------------------------
