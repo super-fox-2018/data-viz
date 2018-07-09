@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "d3": "^5.5.0",
+    "d3-axis": "^1.0.8"
+  },
+  "name": "data-viz",
+  "description": "",
+  "version": "1.0.0",
+  "main": "script.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ridozaen/data-viz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ridozaen/data-viz/issues"
+  },
+  "homepage": "https://github.com/ridozaen/data-viz#readme"
+}
