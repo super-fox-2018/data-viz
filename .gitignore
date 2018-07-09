@@ -189,4 +189,5 @@ yarn-error.log*
 *.sln
 *.sw*
 
+.cache/
 # End of https://www.gitignore.io/api/node,linux,macos,windows,sublimetext,visualstudiocode
