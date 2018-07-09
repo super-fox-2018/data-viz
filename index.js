@@ -2,68 +2,10 @@ import * as d3 from "d3";
 
 let dataset2 = [5, 10, 15, 20, 25];
 
-const margin = { top: 20, right: 0, bottom: 40, left: 40 };
+const margin = { top: 20, right: 20, bottom: 50, left: 40 };
 
 const height = 400;
-const width = 1000;
-
-d3.csv("Pokemon.7cd05a2c.csv").then(dataset => {
-  console.log(dataset);
-
-  let y = d3
-    .scaleLinear()
-    .domain([0, d3.max(dataset, d => d.Attack)]).nice()
-    .range([height - margin.bottom, margin.top])
-
-  let x = d3
-    .scaleBand()
-    .domain(dataset.map(d => d.Name))
-    .range([margin.left, width - margin.right])
-    .padding(0.2)
-
-  let xAxis = g => g
-    .attr("transform", `translate(0,${height - margin.bottom})`)
-    .call(d3.axisBottom(x)
-        .tickSizeOuter(0))
-  
-  let yAxis = g => g
-    .attr("transform", `translate(${margin.left},0)`)
-    .call(d3.axisLeft(y))
-    .call(g => g.select(".domain").remove())
-
-  pokemon
-    .append("g")
-    .selectAll("rect")
-    .data(dataset)
-    .enter()
-    .append("rect")
-    .attr("x", d => x(d.Name))
-    .attr("y", d => y(d.Attack))
-    .attr("height", d => y(0) - y(d.Attack))
-    .attr("width", x.bandwidth());
-  
-  pokemon.append("g")
-    .call(xAxis)
-    .append("text")
-      .attr("x", (width - margin.left - margin.right) / 2)
-      .attr("y", 28)
-      .attr("dy", "0.32em")
-      .attr("fill", "#000")
-      .attr("font-weight", "bold")
-      .attr("text-anchor", "start")
-      .text("Pokemon Name");
-
-  pokemon.append("g")
-    .call(yAxis)
-    .append("text")
-      .attr("x", 2)
-      .attr("y", y(y.ticks().pop()) + 0.5)
-      .attr("dy", "0.32em")
-      .attr("fill", "#000")
-      .attr("font-weight", "bold")
-      .attr("text-anchor", "start")
-      .text("Attack Points");
-});
+const width = 1200;
 
 const pokemon = d3
   .select("#pokemon")
@@ -71,31 +13,129 @@ const pokemon = d3
   .attr("height", height)
   .style("background", "#cacaca");
 
-const colorScale = d3
-  .scaleLinear()
-  .domain([0, d3.max(dataset2)])
-  .range(["peru", "teal"]);
+d3.csv("Pokemon.7cd05a2c.csv").then(dataset => {
+  console.log(dataset);
 
-// const pokemon = d3
-//   .select("#chart")
-//   .attr("width", width)
-//   .attr("height", height)
-//   .style("background", "#cacaca");
+  let keys = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"];
 
-// pokemon
-//   .selectAll("rect")
-//   .data(dataset2)
-//   .enter()
-//   .append("rect")
-//   .attr("class", "bar test")
-//   .attr("x", (d, i) => {
-//     return i * 30
-//   })
-//   .attr("y", (d) => {
-//     return height - yScale(d)
-//   })
-//   .attr("width", 20)
-//   .attr("height", (d) => {
-//     return yScale(d)
-//   })
-//   .attr("fill", colorScale)
+  let x0 = d3
+    .scaleBand()
+    .range([margin.left, width - margin.right])
+    .paddingInner(0.1)
+    .domain(dataset.map(d => d.Name));
+
+  let x1 = d3
+    .scaleBand()
+    .padding(0.05)
+    .domain(keys)
+    .rangeRound([0, x0.bandwidth()]);
+
+  let y = d3
+    .scaleLinear()
+    .range([height - margin.bottom, margin.top])
+    .domain([0, 180])
+    .nice();
+
+  var color = d3
+    .scaleOrdinal()
+    .range(["#8366ac", "#ca5959", "#e4be6c", "#5960ae", "#75aa68", "#f8a3d3"]);
+
+  pokemon
+    .append("g")
+    .selectAll("g")
+    .data(dataset)
+    .enter()
+    .append("g")
+    .attr("transform", function(d) {
+      return `translate(${x0(d.Name)},-${margin.bottom})`;
+    })
+    .selectAll("rect")
+    .data(function(d) {
+      return keys.map(function(key) {
+        return { key: key, value: d[key] };
+      });
+    })
+    .enter()
+    .append("rect")
+    .attr("x", function(d) {
+      return x1(d.key);
+    })
+    .attr("y", function(d) {
+      return y(d.value);
+    })
+    .attr("width", x1.bandwidth())
+    .attr("height", function(d) {
+      return height - y(d.value);
+    })
+    .attr("fill", function(d) {
+      return color(d.key);
+    });
+
+  pokemon
+    .append("g")
+    .attr("class", "x axis")
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .call(d3.axisBottom(x0))
+    .append("text")
+    .attr("x", (width - margin.left - margin.right) / 2)
+    .attr("y", 30)
+    .attr("dy", "0.32em")
+    .attr("fill", "#000")
+    .attr("font-weight", "bold")
+    .attr("text-anchor", "start")
+    .text("Pokemon Name");
+
+  pokemon
+    .append("g")
+    .attr("class", "y axis")
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y).ticks(null, "s"))
+    .append("text")
+    .attr("x", 2)
+    .attr("y", y(y.ticks().pop()) + 0.5)
+    .attr("dy", "0.32em")
+    .attr("fill", "#000")
+    .attr("font-weight", "bold")
+    .attr("text-anchor", "start")
+    .text("Stats Point");
+
+  // pokemon.select('.y').transition().duration(500).delay(1300).style('opacity','1');
+
+  // pokemon
+  //   .append("g")
+  //   .attr("class", "grid")
+  //   .call(
+  //     d3.axisLeft(y)
+  //       .tickSize(-width)
+  //       .tickFormat("")
+  //   );
+
+  let legend = pokemon
+    .append("g")
+    .attr("font-family", "sans-serif")
+    .attr("font-size", 10)
+    .attr("text-anchor", "end")
+    .selectAll("g")
+    .data(keys.slice().reverse())
+    .enter()
+    .append("g")
+    .attr("transform", function(d, i) {
+      return `translate(-${margin.right + i * 80}, 20)`;
+    });
+
+  legend
+    .append("rect")
+    .attr("x", width - 19)
+    .attr("width", 19)
+    .attr("height", 19)
+    .attr("fill", color);
+
+  legend
+    .append("text")
+    .attr("x", width - 24)
+    .attr("y", 9.5)
+    .attr("dy", "0.32em")
+    .text(function(d) {
+      return d;
+    });
+});
