@@ -143,13 +143,25 @@ d3.csv('./cwurData.csv', function (item) {
     });
   };
 
+  var colorScale = d3.scaleLinear().domain([50, d3.max(data, function (d) {
+    return d.score;
+  })]).range(['red', 'green']);
+
   svg.append("g").attr("fill", "steelblue").selectAll("rect").data(data).enter().append("rect").attr("x", function (d) {
     return x(d.institution);
   }).attr("y", function (d) {
     return y(d.score);
   }).attr("height", function (d) {
     return y(0) - y(d.score);
-  }).attr("width", x.bandwidth());
+  }).attr("width", x.bandwidth()).attr('fill', function (d) {
+    return colorScale(d.score);
+  }).on('mouseover', function (d, i) {
+    d3.select(this).style('fill', 'pink');
+  }).on('mouseout', function (d, i) {
+    d3.select(this).style('fill', function (d) {
+      return colorScale(d.score);
+    });
+  });
 
   svg.append("g").call(xAxis);
 
@@ -191,7 +203,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '51125' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '62328' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

@@ -42,16 +42,25 @@ d3.csv('./cwurData.csv', function(item) {
   .call(d3.axisLeft(y))
   .call(g => g.select(".domain").remove())
 
-
+  const colorScale = d3.scaleLinear()
+    .domain([50, d3.max(data, (d) => d.score)])
+    .range(['red', 'green'])
 
   svg.append("g")
-      .attr("fill", "steelblue")
+    .attr("fill", "steelblue")
     .selectAll("rect").data(data).enter().append("rect")
-      .attr("x", d => x(d.institution))
-      .attr("y", d => y(d.score))
-      .attr("height", d => y(0) - y(d.score))
-      .attr("width", x.bandwidth());
-  
+    .attr("x", d => x(d.institution))
+    .attr("y", d => y(d.score))
+    .attr("height", d => y(0) - y(d.score))
+    .attr("width", x.bandwidth())
+    .attr('fill', (d) => colorScale(d.score))
+    .on('mouseover', function(d,i){
+      d3.select(this).style('fill', 'pink')
+    })
+    .on('mouseout', function(d,i){
+      d3.select(this).style('fill', (d) => colorScale(d.score))
+    })
+
   svg.append("g")
       .call(xAxis);
   
