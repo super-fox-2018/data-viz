@@ -12,7 +12,7 @@ d3.csv('./cwurData.csv', function(item) {
   const svg = 
   d3.select('#chartArea').append('svg')
   .attr('width', 2500)
-  .attr('height', 500)
+  .attr('height', 550)
   .style('background', '#cacaca')
   
   const margin = {
@@ -66,6 +66,20 @@ d3.csv('./cwurData.csv', function(item) {
   
   svg.append("g")
       .call(yAxis);
+
+  svg.append("text")
+    .attr("transform","translate(" + (width / 2) + " ," + (height + margin.top) + ")")
+    .style("text-anchor", "middle")
+    .text("Institution");
+
+  //text label for the y axis
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 40)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Score");
 
 
 

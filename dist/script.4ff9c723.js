@@ -115,7 +115,7 @@ d3.csv('./cwurData.csv', function (item) {
   datas.push(result);
 }).then(function () {
   var data = datas.slice(0, 11);
-  var svg = d3.select('#chartArea').append('svg').attr('width', 2500).attr('height', 500).style('background', '#cacaca');
+  var svg = d3.select('#chartArea').append('svg').attr('width', 2500).attr('height', 550).style('background', '#cacaca');
 
   var margin = {
     top: 20,
@@ -166,6 +166,11 @@ d3.csv('./cwurData.csv', function (item) {
   svg.append("g").call(xAxis);
 
   svg.append("g").call(yAxis);
+
+  svg.append("text").attr("transform", "translate(" + width / 2 + " ," + (height + margin.top) + ")").style("text-anchor", "middle").text("Institution");
+
+  //text label for the y axis
+  svg.append("text").attr("transform", "rotate(-90)").attr("y", 40).attr("x", 0 - height / 2).attr("dy", "1em").style("text-anchor", "middle").text("Score");
 });
 
 // let dataset = [5, 10, 34, 20, 25]
@@ -203,7 +208,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '62328' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '64769' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
