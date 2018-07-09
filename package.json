@@ -1,0 +1,23 @@
+{
+  "name": "data-viz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OkyWiliarso/data-viz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OkyWiliarso/data-viz/issues"
+  },
+  "homepage": "https://github.com/OkyWiliarso/data-viz#readme",
+  "dependencies": {
+    "d3": "^5.5.0",
+    "d3-axis": "^1.0.8"
+  }
+}
