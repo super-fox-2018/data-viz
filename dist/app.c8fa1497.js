@@ -27477,9 +27477,24 @@ var d3 = _interopRequireWildcard(_d);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var dataset = [5, 10, 15, 20, 25];
+var multiplier = 10;
+// d3.select('body').selectAll('div')
+//   .data(dataset)
+//   .enter()
+//   .append('div')
+//   .attr('class','bar')
+//   .style('height', function(d){
+//     return d * 5 + 'px'
+//   })
 
-d3.select('body').selectAll('div').data(dataset).enter().append('div').attr('class', 'bar').style('height', function (d) {
-  return d * 5 + 'px';
+var svg = d3.select('#chartarea').append('svg').attr('width', 400).attr('height', 300);
+
+svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').attr('x', function (d, i) {
+  return i * 22;
+}).attr('y', function (d) {
+  return 300 - d * multiplier;
+}).attr('width', 20).attr('height', function (d) {
+  return d * multiplier;
 });
 },{"d3":6}],512:[function(require,module,exports) {
 var global = arguments[3];
