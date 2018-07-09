@@ -1,8 +1,9 @@
 .bar {
   /* width: 50px; */
-  background-color: aquamarine;
+  /* background-color: aquamarine;
   margin-left: 50px;
-  display: inline-block;
+  display: inline-block; */
+  opacity: 0.5;
 }
 
 #chartarea{

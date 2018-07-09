@@ -27476,8 +27476,42 @@ var d3 = _interopRequireWildcard(_d);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var dataset = [5, 10, 15, 20, 25];
-var multiplier = 10;
+// let dataset = [5, 10, 15, 20, 25]
+var dataset = [];
+d3.csv("WorldCups.csv").then(function (data) {
+  data.forEach(function (att) {
+    dataset.push(+att.GoalsScored);
+  });
+
+  // dataset = dataset.slice(0,5)
+
+  var svg = d3.select('#chartarea').append('svg').attr('width', 600).attr('height', 300);
+
+  var yScale = d3.scaleLinear().domain([0, d3.max(dataset)]).range([0, 300]);
+
+  var colorScale = d3.scaleLinear().domain([0, d3.max(dataset)]).range(['peru', 'teal']);
+
+  svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').attr('x', function (d, i) {
+    return i * 22;
+  }).attr('y', function (d) {
+    return 300 - yScale(d);
+  }).attr('width', 20).attr('height', function (d) {
+    return yScale(d);
+  }).attr('fill', colorScale).on('mouseover', function (d, i) {
+    d3.select(this).style('fill', '#bada55');
+  }).on('mouseout', function (d, i) {
+    d3.select(this).style('fill', colorScale(d));
+  });
+
+  svg.append("text").attr("class", "x label").attr("text-anchor", "end").attr("x", 320).attr("y", 295).text("Goal scored every worldcup");
+});
+
+// let dataset = d3.range(15).map(function(){
+//   return Math.random()*50
+// })
+// const multiplier = 10
+
+
 // d3.select('body').selectAll('div')
 //   .data(dataset)
 //   .enter()
@@ -27487,25 +27521,39 @@ var multiplier = 10;
 //     return d * 5 + 'px'
 //   })
 
-var svg = d3.select('#chartarea').append('svg').attr('width', 400).attr('height', 300);
 
-svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').attr('x', function (d, i) {
-  return i * 22;
-}).attr('y', function (d) {
-  return 300 - d * multiplier;
-}).attr('width', 20).attr('height', function (d) {
-  return d * multiplier;
-});
+// svg.selectAll('rect')
+//   .data(dataset)
+//   .enter()
+//   .append('rect')
+//   .attr('class','bar')
+//   .attr('x', function(d, i){
+//     return i * 22
+//   })
+//   .attr('y', function(d){
+//     return 300 - d * multiplier
+//   })
+//   .attr('width',20)
+//   .attr('height', function(d){
+//     return d * multiplier
+//   })
 
-var yScale = d3.scaleLinear().domain([0, 25]).range([0, 300]);
 
-svg.selectAll('rect').data(dataset).enter().append('rect').attr('class', 'bar').attr('x', function (d, i) {
-  return i;
-}).attr('y', function (d) {
-  return 300 - yScale(d);
-}).attr('width', 20).attr('height', function (d) {
-  return yScale(d);
-});
+// svg.selectAll('rect')
+//   .data(dataset)
+//   .enter()
+//   .append('rect')
+//   .attr('class', 'bar')
+//   .attr('x', function(d, i){
+//     return i
+//   })
+//   .attr('y', function(d){
+//     return 300 - yScale(d)
+//   })
+//   .attr('width',20)
+//   .attr('height',function(d){
+//     return yScale(d)
+//   })
 },{"d3":6}],512:[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -27535,7 +27583,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '39589' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '45639' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
