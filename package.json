@@ -1,0 +1,25 @@
+{
+  "name": "data-viz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelcang/data-viz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/michaelcang/data-viz/issues"
+  },
+  "homepage": "https://github.com/michaelcang/data-viz#readme",
+  "dependencies": {
+    "d3": "^5.5.0"
+  }
+}
