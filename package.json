@@ -1,0 +1,22 @@
+{
+  "name": "data-viz",
+  "version": "1.0.0",
+  "description": "Build a bar chart with d3js",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annisaayu/data-viz.git"
+  },
+  "author": "Annisa Ayu Pertiwi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/annisaayu/data-viz/issues"
+  },
+  "homepage": "https://github.com/annisaayu/data-viz#readme",
+  "dependencies": {
+    "d3": "^5.5.0"
+  }
+}
