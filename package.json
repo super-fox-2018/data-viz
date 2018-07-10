@@ -1,0 +1,18 @@
+{
+  "name": "data-viz",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:dwikyerl/data-viz.git",
+  "author": "Dwiky Erlangga <dwikyerl@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.js"
+  },
+  "dependencies": {
+    "d3": "^5.5.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.9.4"
+  }
+}
