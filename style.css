@@ -1,0 +1,25 @@
+#chartArea{
+  margin-right: 5px;
+}
+.bar{
+  margin-right: 5px;
+}
+text {
+  font: 10px sans-serif;
+}
+
+rect.background {
+  fill: white;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: black;
+	shape-rendering: crispEdges;
+}
+
+.axis text {
+	font-family: sans-serif;
+	font-size: 11px;
+}
